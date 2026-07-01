@@ -1,0 +1,33 @@
+{
+    "name": "dnsrpc_set_plugin_dll",
+    "version": "v1.0.0",
+    "command_name": "dnsrpc_set_plugin_dll",
+    "extension_author": "Paradoxis",
+    "original_author": "Paradoxis",
+    "repo_url": "https://github.com/Paradoxis/DNSRPC-BOF",
+    "help": "Configures the DLL to load when the server is restarted",
+    "long_help": "Configures the DLL to load when the server is restarted by setting the `ServerLevelPluginDll` registry key via RPC. Important note: if the DC for whatever reason can't touch the DLL payload you set, it will refuse to start back up and you'll likely cripple the entire domain, consider testing if the DC can connect back to your share using `dnsrpc_coerce_write`  before you accidentally nuke the target. Requires that the current process token belongs to a user which is a member of the DnsAdmins group. Note: Uses experimental exception hooking and may cause beacon instability.",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "dnsrpc_set_plugin_dll.o"
+        }
+    ],
+    "arguments": [
+        {
+            "name": "server",
+            "desc": "ADIDNS server hostname (e.g.: DC01 / DC01.research.lan)",
+            "type": "wstring",
+            "optional": false
+        },
+        {
+            "name": "path",
+            "desc": "Plugin DLL path to load (e.g.: \\\\FS01.research.lan\\shared\\plugin.dll)",
+            "type": "wstring",
+            "optional": false
+        }
+    ]
+}

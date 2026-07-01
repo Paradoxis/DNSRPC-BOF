@@ -1,0 +1,33 @@
+{
+    "name": "dnsrpc_coerce_write",
+    "version": "v1.0.0",
+    "command_name": "dnsrpc_coerce_write",
+    "extension_author": "Paradoxis",
+    "original_author": "Paradoxis",
+    "repo_url": "https://github.com/Paradoxis/DNSRPC-BOF",
+    "help": "Used to force the ADIDNS server to write an empty log file into a specified location of choice. ",
+    "long_help": "Used to force the ADIDNS server to write an empty log file into a specified location of choice. Primarily used to verify that a given DC has the ability to reach whatever share you're going to host your final DLL payload on. Requires that the current process token belongs to a user which is a member of the DnsAdmins group. Note: Uses experimental exception hooking and may cause beacon instability.",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "dnsrpc_coerce_write.o"
+        }
+    ],
+    "arguments": [
+        {
+            "name": "server",
+            "desc": "ADIDNS server hostname (e.g.: DC01 / DC01.research.lan)",
+            "type": "wstring",
+            "optional": false
+        },
+        {
+            "name": "path",
+            "desc": "Plugin DLL path to load (e.g.: \\\\FS01.research.lan\\shared\\example.log)",
+            "type": "wstring",
+            "optional": false
+        }
+    ]
+}

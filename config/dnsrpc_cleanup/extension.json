@@ -1,0 +1,19 @@
+{
+    "name": "dnsrpc_cleanup",
+    "version": "v1.0.0",
+    "command_name": "dnsrpc_cleanup",
+    "extension_author": "Paradoxis",
+    "original_author": "Paradoxis",
+    "repo_url": "https://github.com/Paradoxis/DNSRPC-BOF",
+    "help": "Used to clean forensic artifacts left behind by all other `dnsrpc_` modules.",
+    "long_help": "Used to clean forensic artifacts left behind by all other `dnsrpc_` modules. Must be executed on the targeted domain controller after you obtain 'NT AUTHORITY\\SYSTEM' rights. Does not make use of experimental exception handling.",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "dnsrpc_probe.o"
+        }
+    ]
+}

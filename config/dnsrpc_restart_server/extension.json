@@ -1,0 +1,27 @@
+{
+    "name": "dnsrpc_restart_server",
+    "version": "v1.0.0",
+    "command_name": "dnsrpc_restart_server",
+    "extension_author": "Paradoxis",
+    "original_author": "Paradoxis",
+    "repo_url": "https://github.com/Paradoxis/DNSRPC-BOF",
+    "help": "Issues the ADIDNS server to restart",
+    "long_help": "Issues the ADIDNS server to restart. Important note: if the DC for whatever reason can't touch the DLL payload you set via `dnsrpc_set_plugin_dll`, it will refuse to start back up and you'll likely cripple the entire domain, consider testing if the DC can connect back to your share using `dnsrpc_coerce_write`  before you accidentally nuke the target. Requires that the current process token belongs to a user which is a member of the DnsAdmins group. Note: Uses experimental exception hooking and may cause beacon instability.",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "dnsrpc_restart_server.o"
+        }
+    ],
+    "arguments": [
+        {
+            "name": "server",
+            "desc": "ADIDNS server hostname (e.g.: DC01 / DC01.research.lan)",
+            "type": "wstring",
+            "optional": false
+        }
+    ]
+}

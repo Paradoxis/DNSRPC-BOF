@@ -1,0 +1,321 @@
+//
+// DNS RPC structures
+// Source: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dnsp/f97756c9-3783-428b-9451-b376f877319a
+//
+// Compile with:
+// midl /W1 /char signed /env x64 /target NT100 /Oicf dnsrpc.idl
+//
+
+import "wtypes.idl";
+
+typedef unsigned long* PDWORD;
+typedef byte* PBYTE;
+typedef char* LPSTR;
+typedef unsigned char UCHAR;
+typedef unsigned char BOOLEAN;
+typedef unsigned char BYTE;
+
+// 2.2.3.2.1 IP4_ARRAY
+typedef struct _IP4_ARRAY {
+    unsigned long AddrCount;
+    [size_is(AddrCount)] unsigned long AddrArray[];
+} IP4_ARRAY, *PIP4_ARRAY;
+
+// 2.2.3.2.2 DNS_ADDR
+typedef struct _DnsAddr {
+    char MaxSa[32];
+    unsigned long DnsAddrUserDword[8];
+} DNS_ADDR, *PDNS_ADDR;
+
+// 2.2.3.2.3 DNS_ADDR_ARRAY
+typedef struct _DnsAddrArray {
+    unsigned long MaxCount;
+    unsigned long AddrCount;
+    unsigned long Tag;
+    unsigned short Family;
+    unsigned short WordReserved;
+    unsigned long Flags;
+    unsigned long MatchFlag;
+    unsigned long Reserved1;
+    unsigned long Reserved2;
+    [size_is(AddrCount)] DNS_ADDR AddrArray[];
+} DNS_ADDR_ARRAY, *PDNS_ADDR_ARRAY;
+
+// 2.2.4.2.2.1 DNS_RPC_SERVER_INFO_W2K
+typedef struct _DnsRpcServerInfoW2K {
+    unsigned long   dwVersion;
+    UCHAR           fBootMethod;
+    BOOLEAN         fAdminConfigured;
+    BOOLEAN         fAllowUpdate;
+    BOOLEAN         fDsAvailable;
+    [string] char*  pszServerName;
+    [string] wchar_t* pszDsContainer;
+    PIP4_ARRAY      aipServerAddrs;
+    PIP4_ARRAY      aipListenAddrs;
+    PIP4_ARRAY      aipForwarders;
+    unsigned long*  pExtension1;
+    unsigned long*  pExtension2;
+    unsigned long*  pExtension3;
+    unsigned long*  pExtension4;
+    unsigned long*  pExtension5;
+    unsigned long   dwLogLevel;
+    unsigned long   dwDebugLevel;
+    unsigned long   dwForwardTimeout;
+    unsigned long   dwRpcProtocol;
+    unsigned long   dwNameCheckFlag;
+    unsigned long   cAddressAnswerLimit;
+    unsigned long   dwRecursionRetry;
+    unsigned long   dwRecursionTimeout;
+    unsigned long   dwMaxCacheTtl;
+    unsigned long   dwDsPollingInterval;
+    unsigned long   dwScavengingInterval;
+    unsigned long   dwDefaultRefreshInterval;
+    unsigned long   dwDefaultNoRefreshInterval;
+    unsigned long   dwReserveArray[10];
+    BOOLEAN         fAutoReverseZones;
+    BOOLEAN         fAutoCacheUpdate;
+    BOOLEAN         fRecurseAfterForwarding;
+    BOOLEAN         fForwardDelegations;
+    BOOLEAN         fNoRecursion;
+    BOOLEAN         fSecureResponses;
+    BOOLEAN         fRoundRobin;
+    BOOLEAN         fLocalNetPriority;
+    BOOLEAN         fBindSecondaries;
+    BOOLEAN         fWriteAuthorityNs;
+    BOOLEAN         fStrictFileParsing;
+    BOOLEAN         fLooseWildcarding;
+    BOOLEAN         fDefaultAgingState;
+    BOOLEAN         fReserveArray[15];
+} DNS_RPC_SERVER_INFO_W2K, *PDNS_RPC_SERVER_INFO_W2K;
+
+// 2.2.4.2.2.2 DNS_RPC_SERVER_INFO_DOTNET
+typedef struct _DnsRpcServerInfoDotNet {
+    unsigned long   dwRpcStructureVersion;
+    unsigned long   dwReserved0;
+    unsigned long   dwVersion;
+    UCHAR           fBootMethod;
+    BOOLEAN         fAdminConfigured;
+    BOOLEAN         fAllowUpdate;
+    BOOLEAN         fDsAvailable;
+    [string] char*  pszServerName;
+    [string] wchar_t* pszDsContainer;
+    PIP4_ARRAY      aipServerAddrs;
+    PIP4_ARRAY      aipListenAddrs;
+    PIP4_ARRAY      aipForwarders;
+    PIP4_ARRAY      aipLogFilter;
+    [string] wchar_t* pwszLogFilePath;
+    [string] char*  pszDomainName;
+    [string] char*  pszForestName;
+    [string] char*  pszDomainDirectoryPartition;
+    [string] char*  pszForestDirectoryPartition;
+    [string] char*  pExtensions[6];
+    unsigned long   dwLogLevel;
+    unsigned long   dwDebugLevel;
+    unsigned long   dwForwardTimeout;
+    unsigned long   dwRpcProtocol;
+    unsigned long   dwNameCheckFlag;
+    unsigned long   cAddressAnswerLimit;
+    unsigned long   dwRecursionRetry;
+    unsigned long   dwRecursionTimeout;
+    unsigned long   dwMaxCacheTtl;
+    unsigned long   dwDsPollingInterval;
+    unsigned long   dwLocalNetPriorityNetMask;
+    unsigned long   dwScavengingInterval;
+    unsigned long   dwDefaultRefreshInterval;
+    unsigned long   dwDefaultNoRefreshInterval;
+    unsigned long   dwLastScavengeTime;
+    unsigned long   dwEventLogLevel;
+    unsigned long   dwLogFileMaxSize;
+    unsigned long   dwDsForestVersion;
+    unsigned long   dwDsDomainVersion;
+    unsigned long   dwDsDsaVersion;
+    unsigned long   dwReserveArray[4];
+    BOOLEAN         fAutoReverseZones;
+    BOOLEAN         fAutoCacheUpdate;
+    BOOLEAN         fRecurseAfterForwarding;
+    BOOLEAN         fForwardDelegations;
+    BOOLEAN         fNoRecursion;
+    BOOLEAN         fSecureResponses;
+    BOOLEAN         fRoundRobin;
+    BOOLEAN         fLocalNetPriority;
+    BOOLEAN         fBindSecondaries;
+    BOOLEAN         fWriteAuthorityNs;
+    BOOLEAN         fStrictFileParsing;
+    BOOLEAN         fLooseWildcarding;
+    BOOLEAN         fDefaultAgingState;
+    BOOLEAN         fReserveArray[15];
+} DNS_RPC_SERVER_INFO_DOTNET, *PDNS_RPC_SERVER_INFO_DOTNET;
+
+// 2.2.4.2.2.3 DNS_RPC_SERVER_INFO_LONGHORN (also typedef'd as DNS_RPC_SERVER_INFO)
+typedef struct _DnsRpcServerInfoLonghorn {
+    unsigned long   dwRpcStructureVersion;
+    unsigned long   dwReserved0;
+    unsigned long   dwVersion;
+    UCHAR           fBootMethod;
+    BOOLEAN         fAdminConfigured;
+    BOOLEAN         fAllowUpdate;
+    BOOLEAN         fDsAvailable;
+    [string] char*  pszServerName;
+    [string] wchar_t* pszDsContainer;
+    PDNS_ADDR_ARRAY aipServerAddrs;
+    PDNS_ADDR_ARRAY aipListenAddrs;
+    PDNS_ADDR_ARRAY aipForwarders;
+    PDNS_ADDR_ARRAY aipLogFilter;
+    [string] wchar_t* pwszLogFilePath;
+    [string] char*  pszDomainName;
+    [string] char*  pszForestName;
+    [string] char*  pszDomainDirectoryPartition;
+    [string] char*  pszForestDirectoryPartition;
+    [string] char*  pExtensions[6];
+    unsigned long   dwLogLevel;
+    unsigned long   dwDebugLevel;
+    unsigned long   dwForwardTimeout;
+    unsigned long   dwRpcProtocol;
+    unsigned long   dwNameCheckFlag;
+    unsigned long   cAddressAnswerLimit;
+    unsigned long   dwRecursionRetry;
+    unsigned long   dwRecursionTimeout;
+    unsigned long   dwMaxCacheTtl;
+    unsigned long   dwDsPollingInterval;
+    unsigned long   dwLocalNetPriorityNetMask;
+    unsigned long   dwScavengingInterval;
+    unsigned long   dwDefaultRefreshInterval;
+    unsigned long   dwDefaultNoRefreshInterval;
+    unsigned long   dwLastScavengeTime;
+    unsigned long   dwEventLogLevel;
+    unsigned long   dwLogFileMaxSize;
+    unsigned long   dwDsForestVersion;
+    unsigned long   dwDsDomainVersion;
+    unsigned long   dwDsDsaVersion;
+    BOOLEAN         fReadOnlyDC;
+    unsigned long   dwReserveArray[3];
+    BOOLEAN         fAutoReverseZones;
+    BOOLEAN         fAutoCacheUpdate;
+    BOOLEAN         fRecurseAfterForwarding;
+    BOOLEAN         fForwardDelegations;
+    BOOLEAN         fNoRecursion;
+    BOOLEAN         fSecureResponses;
+    BOOLEAN         fRoundRobin;
+    BOOLEAN         fLocalNetPriority;
+    BOOLEAN         fBindSecondaries;
+    BOOLEAN         fWriteAuthorityNs;
+    BOOLEAN         fStrictFileParsing;
+    BOOLEAN         fLooseWildcarding;
+    BOOLEAN         fDefaultAgingState;
+    BOOLEAN         fReserveArray[15];
+} DNS_RPC_SERVER_INFO_LONGHORN,
+  *PDNS_RPC_SERVER_INFO_LONGHORN,
+  DNS_RPC_SERVER_INFO,
+  *PDNS_RPC_SERVER_INFO;
+
+// 2.2.5.2.8 DNS_RPC_ZONE_EXPORT_INFO
+typedef struct _DnsRpcZoneExport {
+    unsigned long  dwRpcStructureVersion;
+    unsigned long  dwReserved0;
+    [string] char* pszZoneExportFile;
+} DNS_RPC_ZONE_EXPORT_INFO, *PDNS_RPC_ZONE_EXPORT_INFO;
+
+// 2.2.1.2.6 DNSSRV_RPC_UNION
+typedef [switch_type(unsigned long)] union _DnssrvRpcUnion {
+    [case(0)]  byte*                        Null;
+    [case(1)]  unsigned long                Dword;
+    [case(2)]  [string] char*               String;
+    [case(3)]  [string] wchar_t*            WideString;
+    [case(4)]  PIP4_ARRAY                   IpArray;
+    [case(7)]  PDNS_RPC_SERVER_INFO_W2K     ServerInfoW2K;
+    [case(19)] PDNS_RPC_ZONE_EXPORT_INFO    ZoneExport;
+    [case(21)] PDNS_RPC_SERVER_INFO_DOTNET  ServerInfoDotNet;
+    [case(34)] PDNS_ADDR_ARRAY              AddrArray;
+    [case(35)] PDNS_RPC_SERVER_INFO         ServerInfo;
+} DNSSRV_RPC_UNION;
+
+[
+    uuid(50abc2a4-574d-40b3-9d66-ee4fd5fba076),
+    version(5.0),
+    pointer_default(unique)
+]
+interface DnsServer
+{
+    // opnum 0
+    long R_DnssrvOperation(
+        [in]                         handle_t        hBindingHandle,
+        [in, unique, string]         wchar_t*        pwszServerName,
+        [in, unique, string]         char*           pszZone,
+        [in]                         unsigned long   dwContext,
+        [in, unique, string]         char*           pszOperation,
+        [in]                         unsigned long   dwTypeId,
+        [in, switch_is(dwTypeId)]    DNSSRV_RPC_UNION pData
+    );
+
+    // opnum 1
+    long R_DnssrvQuery(
+        [in]                         handle_t        hBindingHandle,
+        [in, unique, string]         wchar_t*        pwszServerName,
+        [in, unique, string]         char*           pszZone,
+        [in, unique, string]         char*           pszOperation,
+        [out]                        unsigned long*  pdwTypeId,
+        [out, switch_is(*pdwTypeId)] DNSSRV_RPC_UNION* ppData
+    );
+
+    // opnum 2
+    long R_DnssrvComplexOperation(
+        [in]                         handle_t        hBindingHandle,
+        [in, unique, string]         wchar_t*        pwszServerName,
+        [in, unique, string]         char*           pszZone,
+        [in, unique, string]         char*           pszOperation,
+        [in]                         unsigned long   dwTypeIn,
+        [in, switch_is(dwTypeIn)]    DNSSRV_RPC_UNION pDataIn,
+        [out]                        unsigned long*  pdwTypeOut,
+        [out, switch_is(*pdwTypeOut)] DNSSRV_RPC_UNION* ppDataOut
+    );
+
+    // opnum 3
+    long R_DnssrvEnumRecords(
+        [in]                                handle_t        hBindingHandle,
+        [in, unique, string]                wchar_t*        pwszServerName,
+        [in, unique, string]                char*           pszZone,
+        [in, unique, string]                char*           pszNodeName,
+        [in, unique, string]                char*           pszStartChild,
+        [in]                                unsigned short  wRecordType,
+        [in]                                unsigned long   fSelectFlag,
+        [in, unique, string]                char*           pszFilterStart,
+        [in, unique, string]                char*           pszFilterStop,
+        [out]                               unsigned long*  pdwBufferLength,
+        [out, size_is(, *pdwBufferLength)]  byte**          ppBuffer
+    );
+
+    // opnum 4
+    long R_DnssrvUpdateRecord(
+        [in]                         handle_t        hBindingHandle,
+        [in, unique, string]         wchar_t*        pwszServerName,
+        [in, unique, string]         char*           pszZone,
+        [in, unique, string]         char*           pszNodeName,
+        [in, unique]                 byte*           pAddRecord,
+        [in, unique]                 byte*           pDeleteRecord
+    );
+
+    // opnum 5
+    long R_DnssrvOperation2(
+        [in]                         handle_t        hBindingHandle,
+        [in]                         unsigned long   dwClientVersion,
+        [in]                         unsigned long   dwSettingFlags,
+        [in, unique, string]         wchar_t*        pwszServerName,
+        [in, unique, string]         char*           pszZone,
+        [in]                         unsigned long   dwContext,
+        [in, unique, string]         char*           pszOperation,
+        [in]                         unsigned long   dwTypeId,
+        [in, switch_is(dwTypeId)]    DNSSRV_RPC_UNION pData
+    );
+
+    // opnum 6
+    long R_DnssrvQuery2(
+        [in]                         handle_t        hBindingHandle,
+        [in]                         unsigned long   dwClientVersion,
+        [in]                         unsigned long   dwSettingFlags,
+        [in, unique, string]         wchar_t*        pwszServerName,
+        [in, unique, string]         char*           pszZone,
+        [in, unique, string]         char*           pszOperation,
+        [out]                        unsigned long*  pdwTypeId,
+        [out, switch_is(*pdwTypeId)] DNSSRV_RPC_UNION* ppData
+    );
+}

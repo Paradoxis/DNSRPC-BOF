@@ -1,0 +1,27 @@
+{
+    "name": "dnsrpc_info",
+    "version": "v1.0.0",
+    "command_name": "dnsrpc_info",
+    "extension_author": "Paradoxis",
+    "original_author": "Paradoxis",
+    "repo_url": "https://github.com/Paradoxis/DNSRPC-BOF",
+    "help": "Used to query basic information from the ADIDNS server.",
+    "long_help": "Used to query basic information from the ADIDNS server. Requires that the current process token belongs to a user which is a member of the DnsAdmins group. Note: Uses experimental exception hooking and may cause beacon instability.",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "dnsrpc_info.o"
+        }
+    ],
+    "arguments": [
+        {
+            "name": "server",
+            "desc": "ADIDNS server hostname (e.g.: DC01 / DC01.research.lan)",
+            "type": "wstring",
+            "optional": false
+        }
+    ]
+}

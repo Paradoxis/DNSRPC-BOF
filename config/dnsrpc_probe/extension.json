@@ -1,0 +1,19 @@
+{
+    "name": "dnsrpc_probe",
+    "version": "v1.0.0",
+    "command_name": "dnsrpc_probe",
+    "extension_author": "Paradoxis",
+    "original_author": "Paradoxis",
+    "repo_url": "https://github.com/Paradoxis/DNSRPC-BOF",
+    "help": "Used to probe if the ADIDNS RPC service is reachable.",
+    "long_help": "Used to probe if the ADIDNS RPC service is reachable. Does not require any special privileges and does not make use of experimental exception hooking.",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+        {
+            "os": "windows",
+            "arch": "amd64",
+            "path": "dnsrpc_probe.o"
+        }
+    ]
+}
