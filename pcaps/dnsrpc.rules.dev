@@ -39,7 +39,7 @@ alert tcp any any -> any any (
   content:"|05 00 00|"; offset:0; depth:3; 
   content:"|02 00 00 00|"; offset:12; depth:4; 
   content:"|05 00|"; offset:22; depth:2; 
-  content:"LogFilePath"; distance:0; nocase; ast_pattern; within:400; 
+  content:"LogFilePath"; distance:0; nocase; fast_pattern; within:400; 
   content:"|5c 00 5c 00|"; distance:0; within:50; 
   flowbits:set,dnsrpc.logfilepath_call; 
   flowbits:noalert; 
