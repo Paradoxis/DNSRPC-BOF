@@ -1,5 +1,5 @@
 # DCERPC header + opnum:5 + "Restart" operation
-alert dcerpc any any -> any any (
+alert tcp any any -> any any (
   msg:"MRLN-SRT - Suspicious MS-DNSP (ADIDNS RPC) restart request observed";
   flow:established,to_server;
   content:"|05 00 00|"; offset:0; depth:3;
@@ -9,7 +9,7 @@ alert dcerpc any any -> any any (
 )
 
 # DCERPC header + opnum:5 + "ServerLevelPluginDll" operation
-alert dcerpc any any -> any any (
+alert tcp any any -> any any (
   msg:"MRLN-SRT - Suspicious MS-DNSP (ADIDNS RPC) ServerLevelPluginDll configuration change request observed";
   flow:established,to_server;
   content:"|05 00 00|"; offset:0; depth:3;
@@ -19,7 +19,7 @@ alert dcerpc any any -> any any (
 )
 
 # DCERPC header + opnum:6 + "ServerInfo" operation
-alert dcerpc any any -> any any (
+alert tcp any any -> any any (
   msg:"MRLN-SRT - Suspicious MS-DNSP (ADIDNS RPC) ServerInfo enumeration request observed";
   flow:established,to_server;
   content:"|05 00 00|"; offset:0; depth:3;
@@ -30,7 +30,7 @@ alert dcerpc any any -> any any (
 
 # DCERPC header + opnum:5 + "LogFilePath" operation with a "\\host\share\anything", followed by
 # DCERPC header + opnum:5 + "ClearDebugLog" operation
-alert dcerpc any any -> any any (
+alert tcp any any -> any any (
   msg:"MRLN-SRT - Suspicious MS-DNSP (ADIDNS RPC) LogFilePath+ClearDebugLog coercion request observed 1/2";
   flow:established,to_server;
   content:"|05 00 00|"; offset:0; depth:3;
@@ -41,7 +41,7 @@ alert dcerpc any any -> any any (
   flowbits:noalert;
   classtype:misc-attack; priority:3; sid:1000040; rev:1;
 )
-alert dcerpc any any -> any any (
+alert tcp any any -> any any (
   msg:"MRLN-SRT - Suspicious MS-DNSP (ADIDNS RPC) LogFilePath+ClearDebugLog coercion request observed 2/2";
   flow:established,to_server;
   flowbits:isset,dnsrpc.logfilepath_call;
